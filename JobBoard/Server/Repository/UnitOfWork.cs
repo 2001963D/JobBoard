@@ -21,6 +21,7 @@ namespace JobBoard.Server.Repository
         private IGenericRepository<JS> _jSs; 
         private IGenericRepository<Listing> _listings;
         private IGenericRepository<Review> _reviews;
+        private IGenericRepository<Enquiry> _enquirys;
 
 
         private UserManager<ApplicationUser> _userManager;
@@ -41,6 +42,8 @@ namespace JobBoard.Server.Repository
             => _listings ??= new GenericRepository<Listing>(_context);
         public IGenericRepository<Review> Reviews
             => _reviews ??= new GenericRepository<Review>(_context);
+        public IGenericRepository<Enquiry> Enquirys
+            => _enquirys ??= new GenericRepository<Enquiry>(_context);
 
 
         public void Dispose()

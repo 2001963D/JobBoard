@@ -1,28 +1,31 @@
 ﻿using JobBoard.Shared.Domain;
-using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace JobBoard.Server.Configurations.Entities
 {
-    public class LocationSeedConfiguration
+    public class LocationSeedConfiguration : IEntityTypeConfiguration<Location>
+
     {
         public void Configure(EntityTypeBuilder<Location> builder)
         {
             builder.HasData(
                 new Location
                 {
-                    Id = 1,
-                    Name = "Ang Mo Kio",
-                    DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now,
-                    CreatedBy = "System",
-                    UpdatedBy = "System"
+                    LocationId = 1,
+                    Name = "Ang Mo Kio"
+                },
+                new Location
+                {
+                    LocationId = 2,
+                    Name = "Tampines"
                 }
                 );
+
         }
     }
 }

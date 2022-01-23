@@ -8,10 +8,11 @@ namespace JobBoard.Shared.Domain
 {
     public class Listing : BaseDomainModel
     {
-        public string ListingLoc { get; set; }
-        public string ListingDesc { get; set; }
-        public string ListingName { get; set; }
-        public int EmployerId { get; set; }
-        public int AppointmentId { get; set; }
+        public string Description { get; set; }
+        public string Name { get; set; }
+        public int Rating { get; set; }
+        public int? EmployerId { get; set; }
+        public virtual Employer Employer{ get; set;}
+        public virtual List<Appointment> Appointments { get; set; }
     }
 }

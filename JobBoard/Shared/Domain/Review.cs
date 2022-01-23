@@ -8,8 +8,7 @@ namespace JobBoard.Shared.Domain
 {
     public class Review : BaseDomainModel
     {
-        public string ReviewDesc { get; set; }
-        public int ReviewRating { get; set; }
+        public string Description { get; set; }
         public int? JSId { get; set; }
         public virtual JS JS { get; set; }
         public int? ListingId { get; set; }

@@ -1,4 +1,5 @@
 ﻿using IdentityServer4.EntityFramework.Options;
+using JobBoard.Server.Configurations.Entities;
 using JobBoard.Server.Models;
 using JobBoard.Shared.Domain;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
@@ -23,5 +24,14 @@ namespace JobBoard.Server.Data
 
         public DbSet<Listing> Listings { get; set; }
         public DbSet<JS> Js { get; set; }
+        public DbSet<Enquiry> Enquirys { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new ListingSeedConfiguration());
+        }
     }
 }

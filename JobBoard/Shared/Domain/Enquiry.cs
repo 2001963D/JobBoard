@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace JobBoard.Shared.Domain
 {
-    public class Employer : BaseDomainModel
+    public class Enquiry : BaseDomainModel
     {
-        public int Contact { get; set; }
+        public string Details { get; set; }
+        public string Name { get; set; }
+        public int Contact { get; set; }    
         public string Email { get; set; }
-       
     }
 }
