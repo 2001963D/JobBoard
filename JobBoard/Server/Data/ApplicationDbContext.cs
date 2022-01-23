@@ -26,12 +26,13 @@ namespace JobBoard.Server.Data
         public DbSet<JS> Js { get; set; }
         public DbSet<Enquiry> Enquirys { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Location> Locations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new ListingSeedConfiguration());
+            builder.ApplyConfiguration(new LocationSeedConfiguration());
         }
     }
 }
