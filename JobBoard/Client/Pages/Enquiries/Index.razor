@@ -19,35 +19,33 @@ else
     <table class="table table-responsive">
         <thead>
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Driving License</th>
-                <th>Contact Number</th>
+                <th>Name</th>
+                <th>Contact</th>
                 <th>Email Address</th>
+                <th>Details</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var customer in Customers)
+            @foreach (var enquiry in Enquirys)
             {
-                <tr>
-                    <td>@customer.FirstName</td>
-                    <td>@customer.LastName</td>
-                    <td>@customer.DrivingLicense</td>
-                    <td>@customer.ContactNumber</td>
-                    <td>@customer.EmailAddress</td>
-                    <td>
-                        <a href="/customers/view/@customer.Id" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/customers/edit/@customer.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(customer.Id))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
-                </tr>
+            <tr>
+                <td>@enquiry.Name</td>
+                <td>@enquiry.Contact</td>
+                <td>@enquiry.Email</td>
+                <td>@enquiry.Details</td>
+                <td>
+                    <a href="/customers/view/@enquiry.Id" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/customers/edit/@enquiry.Id" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(enquiry.Id))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
@@ -63,7 +61,7 @@ else
 
     async Task Delete(int enquiryId)
     {
-        var about = Enquirys.First(q => q.Id == enquiryId);
+        var enquiry = Enquirys.First(q => q.Id == enquiryId);
         var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {enquiry.Details}?");
         if (confirm)
         {
