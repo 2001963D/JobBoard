@@ -22,6 +22,7 @@ namespace JobBoard.Server.Repository
         private IGenericRepository<Listing> _listings;
         private IGenericRepository<Review> _reviews;
         private IGenericRepository<Enquiry> _enquirys;
+        private IGenericRepository<Location> _locations;
 
 
         private UserManager<ApplicationUser> _userManager;
@@ -38,6 +39,8 @@ namespace JobBoard.Server.Repository
             => _employers ??= new GenericRepository<Employer>(_context);
         public IGenericRepository<JS> JSs
             => _jSs ??= new GenericRepository<JS>(_context);
+        public IGenericRepository<Location> Locations
+            => _locations ??= new GenericRepository<Location>(_context);
         public IGenericRepository<Listing> Listings
             => _listings ??= new GenericRepository<Listing>(_context);
         public IGenericRepository<Review> Reviews
