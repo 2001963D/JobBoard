@@ -17,6 +17,7 @@ namespace JobBoard.Server.IRepository
         IGenericRepository<Review> Reviews { get; }
         IGenericRepository<Enquiry> Enquirys { get; }
         IGenericRepository<Location> Locations { get; }
+
   
     }
 }

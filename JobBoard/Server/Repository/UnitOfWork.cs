@@ -25,6 +25,7 @@ namespace JobBoard.Server.Repository
         private IGenericRepository<Location> _locations;
 
 
+
         private UserManager<ApplicationUser> _userManager;
 
         public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
