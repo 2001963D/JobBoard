@@ -1,4 +1,11 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
+
+
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">JobBoard</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
