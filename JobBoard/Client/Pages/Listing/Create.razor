@@ -1,0 +1,31 @@
+﻿@page "/listings/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Jobs</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Listing" listing="listing" OnValidSubmit="@CreateListing" />
+
+@code {
+    Listing listing = new Listing();
+
+
+    private IList<Employer> Employers;
+    private IList<Location> Locations;
+    private IList<Review> Reviews;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Employers = await _client.GetFromJsonAsync<List<Employer>>($"{Endpoints.EmployersEndpoint}");
+        Locations = await _client.GetFromJsonAsync<List<Location>>($"{Endpoints.LocationsEndpoint}");
+        Reviews = await _client.GetFromJsonAsync<List<Review>>($"{Endpoints.ReviewsEndpoint}");
+    }
+
+    private async Task CreateListing()
+    {
+        await _client.PostAsJsonAsync(Endpoints.ListingsEndpoint, listing);
+        _navManager.NavigateTo("/listing/");
+    }
+}

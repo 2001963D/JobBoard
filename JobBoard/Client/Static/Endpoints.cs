@@ -13,9 +13,8 @@ namespace JobBoard.Client.Static
         public static readonly string EmployersEndpoint = $"{Prefix}/employers";
         public static readonly string EnquirysEndpoint = $"{Prefix}/enquirys";
         public static readonly string JSsEndpoint = $"{Prefix}/jSs";
-        public static readonly string ListingsEndpoint = $"{Prefix}/listingrs";
+        public static readonly string ListingsEndpoint = $"{Prefix}/listings";
         public static readonly string LocationsEndpoint = $"{Prefix}/locations";
         public static readonly string ReviewsEndpoint = $"{Prefix}/reviews";
-        public static readonly string AboutsEndpoint = $"{Prefix}/abouts";
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobBoard.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220124100527_addNameToUser")]
-    partial class addNameToUser
+    [Migration("20220127083835_newdb")]
+    partial class newdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -254,6 +254,9 @@ namespace JobBoard.Server.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -331,7 +334,7 @@ namespace JobBoard.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Js");
+                    b.ToTable("Jss");
                 });
 
             modelBuilder.Entity("JobBoard.Shared.Domain.Listing", b =>
@@ -356,10 +359,16 @@ namespace JobBoard.Server.Migrations
                     b.Property<int?>("EmployerId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ReviewId")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -368,6 +377,10 @@ namespace JobBoard.Server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EmployerId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("ReviewId");
 
                     b.ToTable("Listings");
                 });
@@ -421,17 +434,12 @@ namespace JobBoard.Server.Migrations
                     b.Property<int?>("JSId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ListingId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("JSId");
-
-                    b.HasIndex("ListingId");
 
                     b.ToTable("Reviews");
                 });
@@ -592,7 +600,19 @@ namespace JobBoard.Server.Migrations
                         .WithMany()
                         .HasForeignKey("EmployerId");
 
+                    b.HasOne("JobBoard.Shared.Domain.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId");
+
+                    b.HasOne("JobBoard.Shared.Domain.Review", "Review")
+                        .WithMany()
+                        .HasForeignKey("ReviewId");
+
                     b.Navigation("Employer");
+
+                    b.Navigation("Location");
+
+                    b.Navigation("Review");
                 });
 
             modelBuilder.Entity("JobBoard.Shared.Domain.Review", b =>
@@ -601,13 +621,7 @@ namespace JobBoard.Server.Migrations
                         .WithMany()
                         .HasForeignKey("JSId");
 
-                    b.HasOne("JobBoard.Shared.Domain.Listing", "Listing")
-                        .WithMany()
-                        .HasForeignKey("ListingId");
-
                     b.Navigation("JS");
-
-                    b.Navigation("Listing");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

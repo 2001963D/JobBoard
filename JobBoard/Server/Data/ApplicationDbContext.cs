@@ -23,7 +23,7 @@ namespace JobBoard.Server.Data
         public DbSet<Employer> Employers { get; set; }
 
         public DbSet<Listing> Listings { get; set; }
-        public DbSet<JS> Js { get; set; }
+        public DbSet<JS> Jss { get; set; }
         public DbSet<Enquiry> Enquirys { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Location> Locations { get; set; }

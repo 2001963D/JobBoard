@@ -11,7 +11,6 @@ namespace JobBoard.Shared.Domain
         public string Description { get; set; }
         public int? JSId { get; set; }
         public virtual JS JS { get; set; }
-        public int? ListingId { get; set; }
-        public virtual Listing Listing { get; set; }
+
     }
 }

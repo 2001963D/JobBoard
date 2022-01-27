@@ -33,7 +33,7 @@ namespace JobBoard.Server.Controllers
         public async Task<IActionResult> GetListings()
         {
             //return await _context.Listings.ToListAsync();
-            var Listings = await _unitofWork.Listings.GetAll();
+            var Listings = await _unitofWork.Listings.GetAll(includes: q => q.Include(x =>x.Employer).Include(x => x.Location).Include(x => x.Review));
             return Ok(Listings);
         }
 

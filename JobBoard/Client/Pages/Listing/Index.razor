@@ -1,0 +1,75 @@
+﻿@page "/listings/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Jobs</h3>
+<a href="/listings/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Listing
+</a>
+<br />
+<br />
+
+@if (Listings == null)
+{
+    <div class="alert alert-info">Loading Jobs...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Employer</th>
+                <th>Location</th>
+                <th>Reviews</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var listing in Listings)
+            {
+            <tr>
+                <td>@listing.Name</td>
+                <td>@listing.Description</td>
+                <td>@listing.Employer.Name</td>
+                <td>@listing.Location.Name</td>
+                <td>@listing.Review.Description</td>
+                <td>
+                    <a href="/models/view/@listing.Id" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/models/edit/@listing.Id" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(listing.Id))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Listing> Listings;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Listings = await _client.GetFromJsonAsync<List<Listing>>($"{Endpoints.ListingsEndpoint}");
+    }
+
+    async Task Delete(int listingId)
+    {
+        var listing = Listings.First(q => q.Id == listingId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {listing.Name}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.ListingsEndpoint}/{listingId}");
+            await OnInitializedAsync();
+        }
+    }
+}
