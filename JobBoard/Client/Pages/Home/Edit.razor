@@ -1,0 +1,23 @@
+﻿@page "/homes/edit/{id:int}/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit Search</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditSearch" search="search" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Search search = new Search();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        search = await _client.GetFromJsonAsync<Search>($"{Endpoints.SearchsEndpoint}/{id}");
+    }
+
+    async Task EditSearch()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.SearchsEndpoint}/{id}", search);
+        _navManager.NavigateTo("/homes/");
+    }
+}

@@ -3,10 +3,11 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 
+
 <h3 class="card-title">Jobs</h3>
 <br />
 <a href="/listings/create" class="btn btn-secondary">
-    <span class="oi oi-plus"></span>    
+    <span class="oi oi-plus"></span>
     Create New Listing
 </a>
 <br />
@@ -32,24 +33,24 @@ else
         <tbody>
             @foreach (var listing in Listings)
             {
-            <tr>
-                <td>@listing.Name</td>
-                <td>@listing.Description</td>
-                <td>@listing.Employer.Name</td>
-                <td>@listing.Location.Name</td>
-                <td>@listing.Review.Description</td>
-                <td>
-                    <a href="/models/view/@listing.Id" class="btn btn-primary">
-                        <span class="oi oi-book"></span>
-                    </a>
-                    <a href="/models/edit/@listing.Id" class="btn btn-warning">
-                        <span class="oi oi-pencil"></span>
-                    </a>
-                    <button class="btn btn-danger" @onclick="@(()=>Delete(listing.Id))">
-                        <span class="oi oi-delete"></span>
-                    </button>
-                </td>
-            </tr>
+                <tr>
+                    <td>@listing.Name</td>
+                    <td>@listing.Description</td>
+                    <td>@listing.Employer.Name</td>
+                    <td>@listing.Location.Name</td>
+                    <td>@listing.Review.Description</td>
+                    <td>
+                        <a href="/models/view/@listing.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/models/edit/@listing.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(listing.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
@@ -60,6 +61,7 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+
         Listings = await _client.GetFromJsonAsync<List<Listing>>($"{Endpoints.ListingsEndpoint}");
     }
 
@@ -73,4 +75,5 @@ else
             await OnInitializedAsync();
         }
     }
+
 }

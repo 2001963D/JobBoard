@@ -23,7 +23,7 @@ namespace JobBoard.Server.Repository
         private IGenericRepository<Review> _reviews;
         private IGenericRepository<Enquiry> _enquirys;
         private IGenericRepository<Location> _locations;
-
+        private IGenericRepository<Search> _searchs;
 
 
         private UserManager<ApplicationUser> _userManager;
@@ -48,7 +48,8 @@ namespace JobBoard.Server.Repository
             => _reviews ??= new GenericRepository<Review>(_context);
         public IGenericRepository<Enquiry> Enquirys
             => _enquirys ??= new GenericRepository<Enquiry>(_context);
-
+        public IGenericRepository<Search> Searchs
+            => _searchs ??= new GenericRepository<Search>(_context);
 
         public void Dispose()
         {

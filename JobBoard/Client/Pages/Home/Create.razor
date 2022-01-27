@@ -1,15 +1,15 @@
-﻿@page "/listings/create/"
+﻿@page "/homes/create/"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3 class="card-title">Create New Listings</h3>
+<h3 class="card-title">Create New Searchs</h3>
 <hr />
 <br />
 
-<FormComponent ButtonText="Create Listing" listing="listing" OnValidSubmit="@CreateListing" />
+<FormComponent ButtonText="Create Search" search="search" OnValidSubmit="@CreateSearch" />
 
 @code {
-    Listing listing = new Listing();
+    Search search = new Search();
 
 
     private IList<Employer> Employers;
@@ -23,9 +23,9 @@
         Reviews = await _client.GetFromJsonAsync<List<Review>>($"{Endpoints.ReviewsEndpoint}");
     }
 
-    private async Task CreateListing()
+    private async Task CreateSearch()
     {
-        await _client.PostAsJsonAsync(Endpoints.ListingsEndpoint, listing);
-        _navManager.NavigateTo("/listing/");
+        await _client.PostAsJsonAsync(Endpoints.SearchsEndpoint, search);
+        _navManager.NavigateTo("/home/");
     }
 }
