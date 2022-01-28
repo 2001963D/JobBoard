@@ -47,7 +47,7 @@ namespace JobBoard.Server
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews()
-                .AddNewtonsoftJson(op =>op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                .AddNewtonsoftJson(op =>op.SerializerSettings.ReferenceLoopHandling =Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddRazorPages();
         }

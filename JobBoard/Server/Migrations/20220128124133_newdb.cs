@@ -301,6 +301,7 @@ namespace JobBoard.Server.Migrations
                     EmployerId = table.Column<int>(type: "int", nullable: true),
                     LocationId = table.Column<int>(type: "int", nullable: true),
                     ReviewId = table.Column<int>(type: "int", nullable: true),
+                    SearchId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -354,6 +355,32 @@ namespace JobBoard.Server.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Appointments_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Locations",
+                        principalColumn: "LocationId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Searchs",
+                columns: table => new
+                {
+                    SearchId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ListingId = table.Column<int>(type: "int", nullable: true),
+                    LocationId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Searchs", x => x.SearchId);
+                    table.ForeignKey(
+                        name: "FK_Searchs_Listings_ListingId",
+                        column: x => x.ListingId,
+                        principalTable: "Listings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Searchs_Locations_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Locations",
                         principalColumn: "LocationId",
@@ -446,6 +473,11 @@ namespace JobBoard.Server.Migrations
                 column: "ReviewId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Listings_SearchId",
+                table: "Listings",
+                column: "SearchId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_Expiration",
                 table: "PersistedGrants",
                 column: "Expiration");
@@ -464,10 +496,32 @@ namespace JobBoard.Server.Migrations
                 name: "IX_Reviews_JSId",
                 table: "Reviews",
                 column: "JSId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Searchs_ListingId",
+                table: "Searchs",
+                column: "ListingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Searchs_LocationId",
+                table: "Searchs",
+                column: "LocationId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Listings_Searchs_SearchId",
+                table: "Listings",
+                column: "SearchId",
+                principalTable: "Searchs",
+                principalColumn: "SearchId",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Searchs_Listings_ListingId",
+                table: "Searchs");
+
             migrationBuilder.DropTable(
                 name: "Appointments");
 
@@ -496,25 +550,28 @@ namespace JobBoard.Server.Migrations
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
-                name: "Listings");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Employers");
+                name: "Listings");
 
             migrationBuilder.DropTable(
-                name: "Locations");
+                name: "Employers");
 
             migrationBuilder.DropTable(
                 name: "Reviews");
 
             migrationBuilder.DropTable(
+                name: "Searchs");
+
+            migrationBuilder.DropTable(
                 name: "Jss");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
         }
     }
 }

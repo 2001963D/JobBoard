@@ -369,6 +369,9 @@ namespace JobBoard.Server.Migrations
                     b.Property<int?>("ReviewId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SearchId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -379,6 +382,8 @@ namespace JobBoard.Server.Migrations
                     b.HasIndex("LocationId");
 
                     b.HasIndex("ReviewId");
+
+                    b.HasIndex("SearchId");
 
                     b.ToTable("Listings");
                 });
@@ -440,6 +445,28 @@ namespace JobBoard.Server.Migrations
                     b.HasIndex("JSId");
 
                     b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("JobBoard.Shared.Domain.Search", b =>
+                {
+                    b.Property<int>("SearchId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ListingId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SearchId");
+
+                    b.HasIndex("ListingId");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("Searchs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -606,6 +633,10 @@ namespace JobBoard.Server.Migrations
                         .WithMany()
                         .HasForeignKey("ReviewId");
 
+                    b.HasOne("JobBoard.Shared.Domain.Search", null)
+                        .WithMany("Listings")
+                        .HasForeignKey("SearchId");
+
                     b.Navigation("Employer");
 
                     b.Navigation("Location");
@@ -620,6 +651,21 @@ namespace JobBoard.Server.Migrations
                         .HasForeignKey("JSId");
 
                     b.Navigation("JS");
+                });
+
+            modelBuilder.Entity("JobBoard.Shared.Domain.Search", b =>
+                {
+                    b.HasOne("JobBoard.Shared.Domain.Listing", "Listing")
+                        .WithMany()
+                        .HasForeignKey("ListingId");
+
+                    b.HasOne("JobBoard.Shared.Domain.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId");
+
+                    b.Navigation("Listing");
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -676,6 +722,11 @@ namespace JobBoard.Server.Migrations
             modelBuilder.Entity("JobBoard.Shared.Domain.Listing", b =>
                 {
                     b.Navigation("Appointments");
+                });
+
+            modelBuilder.Entity("JobBoard.Shared.Domain.Search", b =>
+                {
+                    b.Navigation("Listings");
                 });
 #pragma warning restore 612, 618
         }

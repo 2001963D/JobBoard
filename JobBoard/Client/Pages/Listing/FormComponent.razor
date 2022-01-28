@@ -23,7 +23,7 @@
     <div class="form-group">
         <label>Employer Name: </label>
         <div>
-            <InputSelect @bind-Value="listing.Employer.Name" class="form-control">
+            <InputSelect @bind-Value="listing.EmployerId" class="form-control">
                 <option value="">--Select Employer--</option>
                 @if (Employers != null)
                 {
@@ -33,14 +33,14 @@
                     }
                 }
             </InputSelect>
-            <ValidationMessage For="@(() => listing.Employer.Name)" />
+            <ValidationMessage For="@(() => listing.EmployerId)" />
         </div>
     </div>
 
     <div class="form-group">
         <label>Location: </label>
         <div>
-            <InputSelect @bind-Value="listing.Location.Name" class="form-control">
+            <InputSelect @bind-Value="listing.LocationId" class="form-control">
                 <option value="">--Select Location--</option>
                 @if (Locations != null)
                 {
@@ -50,14 +50,14 @@
                     }
                 }
             </InputSelect>
-            <ValidationMessage For="@(() => listing.Location.Name)" />
+            <ValidationMessage For="@(() => listing.LocationId)" />
         </div>
     </div>
 
     <div class="form-group">
         <label>Review: </label>
         <div>
-            <InputSelect @bind-Value="listing.Review.Description" class="form-control">
+            <InputSelect @bind-Value="listing.ReviewId" class="form-control">
                 <option value="">--Select Review--</option>
                 @if (Reviews != null)
                 {
@@ -67,7 +67,7 @@
                     }
                 }
             </InputSelect>
-            <ValidationMessage For="@(() => listing.Review.Description)" />
+            <ValidationMessage For="@(() => listing.ReviewId)" />
         </div>
     </div>
 

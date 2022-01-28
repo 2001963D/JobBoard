@@ -38,6 +38,6 @@
 
     protected async override Task OnInitializedAsync()
     {
-        Listings = await _client.GetFromJsonAsync<Listing>($"{Endpoints.ListingsEndpoint}");
+        Listings = await _client.GetFromJsonAsync<List<Listing>>($"{Endpoints.ListingsEndpoint}");
     }
 }

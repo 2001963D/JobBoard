@@ -27,6 +27,7 @@ namespace JobBoard.Server.Data
         public DbSet<Enquiry> Enquirys { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<Search> Searchs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
