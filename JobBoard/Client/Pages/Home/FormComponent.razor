@@ -36,7 +36,7 @@
 
     private IList<Listing> Listings;
 
-    protected async override Task OnParametersSetAsync()
+    protected async override Task OnInitializedAsync()
     {
         Listings = await _client.GetFromJsonAsync<Listing>($"{Endpoints.ListingsEndpoint}");
     }
