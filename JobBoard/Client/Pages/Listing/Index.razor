@@ -4,6 +4,7 @@
 @attribute [Authorize]
 
 
+
 <h3 class="card-title">Jobs</h3>
 <br />
 <a href="/listings/create" class="btn btn-secondary">
@@ -22,11 +23,11 @@ else
     <table class="table table-responsive">
         <thead>
             <tr>
-                <th>Name</th>
+                <th>Title</th>
                 <th>Description</th>
                 <th>Employer</th>
                 <th>Location</th>
-                <th>Reviews</th>
+                <!--<th>Reviews</th>-->
                 <th>Actions</th>
             </tr>
         </thead>
@@ -36,9 +37,9 @@ else
                 <tr>
                     <td>@listing.Name</td>
                     <td>@listing.Description</td>
-                    <td>@listing.Employer.Name</td>
+                    <td>@listing.Employer.FirstName</td>
                     <td>@listing.Location.Name</td>
-                    <td>@listing.Review.Description</td>
+                    <!--<td>@listing.Review.Description</td>-->
                     <td>
                         <a href="/models/view/@listing.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
@@ -48,6 +49,7 @@ else
                         </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(listing.Id))">
                             <span class="oi oi-delete"></span>
+                            <!-- Create appointment booking item -->
                         </button>
                     </td>
                 </tr>

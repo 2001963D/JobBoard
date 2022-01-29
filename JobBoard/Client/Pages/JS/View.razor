@@ -1,0 +1,17 @@
+﻿@page "/jSs/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View</h3>
+
+<FormComponent jS="jS" Disabled="true" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    JS jS = new JS();
+    protected async override Task OnParametersSetAsync()
+    {
+        jS = await
+       _client.GetFromJsonAsync<JS>($"{Endpoints.JSsEndpoint}/{id}");
+    }
+}

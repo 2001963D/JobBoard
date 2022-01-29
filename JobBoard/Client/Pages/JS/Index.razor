@@ -1,0 +1,75 @@
+﻿@page "/jSs/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Job Seekers</h3>
+
+<a href="/jSs/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Job Seeker Profile
+</a>
+<br />
+<br />
+
+@if (JSs == null)
+{
+    <div class="alert alert-info">Loading Job Seekers...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Email</th>
+                <th>Resume</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var jS in JSs)
+            {
+                <tr>
+                    <td>@jS.FirstName @jS.LastName</td>
+                    <td>@jS.Contact</td>
+                    <td>@jS.Email</td>
+                    <td>@jS.Resume</td>
+                    <td>
+                        <a href="/makes/view/@jS.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/makes/edit/@jS.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(jS.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private List<JS> JSs;
+
+    protected async override Task OnInitializedAsync()
+    {
+        JSs = await _client.GetFromJsonAsync<List<JS>>($"{Endpoints.JSsEndpoint}");
+    }
+
+    async Task Delete(int jSId)
+    {
+        var jS = JSs.First(q => q.Id == jSId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {jS.Contact}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.JSsEndpoint}/{jSId}");
+            await OnInitializedAsync();
+        }
+    }
+}

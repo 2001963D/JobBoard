@@ -1,0 +1,19 @@
+﻿@page "/jSs/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Job Seeker Profile</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create JS" jS="jS" OnValidSubmit="@CreateJS" />
+
+@code {
+    JS jS= new JS();
+
+    private async Task CreateJS()
+    {
+        await _client.PostAsJsonAsync(Endpoints.JSsEndpoint, jS);
+        _navManager.NavigateTo("/jSs/");
+    }
+}

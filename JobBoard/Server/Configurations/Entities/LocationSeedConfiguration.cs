@@ -23,6 +23,21 @@ namespace JobBoard.Server.Configurations.Entities
                 {
                     LocationId = 2,
                     Name = "Tampines"
+                },
+                new Location
+                {
+                    LocationId = 3,
+                    Name = "Hougang"
+                },
+                new Location
+                {
+                    LocationId = 4,
+                    Name = "SengKang"
+                },
+                new Location
+                {
+                    LocationId = 5,
+                    Name = "Paya Lebar"
                 }
                 );
 

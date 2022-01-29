@@ -1,0 +1,49 @@
+﻿@page "/search/"
+@inject HttpClient _client
+
+<EditForm Model="@search" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <h><b>Search for Jobs</b></h>
+    <hr />
+
+    <div class="col-12">
+        <div class="col-12 row">
+            <input type="text" class="col-9 form-control" placeholder="search" />
+            <span>&nbsp;</span><button class="btn btn-primary">Search</button>
+        </div>
+        <br />
+
+        @if (search.Listings != null && search.Listings.Count() > 0)
+        {
+            @foreach (var listing in Listings)
+            {
+                <a href="/appointment"
+                   class="list-group-item-group-item-action flex-column align-items-start bold-text">
+                    @listing.Id <span></span>@listing.Name<span></span>@listing.Location.Name
+                </a>
+            }
+        }
+    </div>
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+    <BackToList Target="searchs" />
+</EditForm>
+
+    @code {
+        [Parameter] public bool Disabled { get; set; } = false;
+        [Parameter] public Search search { get; set; }
+        [Parameter] public string ButtonText { get; set; } = "Save";
+        [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+        private IList<Listing> Listings;
+
+        protected async override Task OnInitializedAsync()
+        {
+            Listings = await _client.GetFromJsonAsync<List<Listing>>($"{Endpoints.ListingsEndpoint}");
+        }
+    }

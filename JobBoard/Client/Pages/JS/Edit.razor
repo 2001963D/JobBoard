@@ -1,0 +1,23 @@
+﻿@page "/jSs/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager  
+
+<h3>Edit Job Seeker Profile</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditJS" jS="jS" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    JS jS = new JS();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        jS = await _client.GetFromJsonAsync<JS>($"{Endpoints.JSsEndpoint}/{id}");
+    }
+
+    async Task EditJS()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.JSsEndpoint}/{id}", jS);
+        _navManager.NavigateTo("/jSs/");
+    }
+}
