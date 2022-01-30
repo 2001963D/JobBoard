@@ -3,7 +3,7 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 
-<h3 class="card-title">Employer</h3>
+<h3 class="card-title"><b><u>Employer</u></b></h3>
 
 <a href="/employers/create" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
@@ -35,10 +35,10 @@ else
                     <td>@employer.Contact</td>
                     <td>@employer.Email</td>
                     <td>
-                        <a href="/makes/view/@employer.Id" class="btn btn-primary">
+                        <a href="/employers/view/@employer.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/makes/edit/@employer.Id" class="btn btn-warning">
+                        <a href="/employers/edit/@employer.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(employer.Id))">
@@ -50,7 +50,7 @@ else
         </tbody>
     </table>
 }
-
+<SurveyPrompt Title="Any questions/problems?" />
 
 @code {
     private List<Employer> Employers;

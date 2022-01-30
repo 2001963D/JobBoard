@@ -5,54 +5,81 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="form-group">
-        <label>Listing: </label>
-        <div>
-            <InputSelect @bind-Value="appointment.ListingId" class="form-control">
-                <option value="">--Select Vehicle--</option>
-                @if (Listings != null)
-                {
-                    foreach (var listing in Listings)
-                    {
-                        <option value="@listing.Id">
-                            @listing.Name - @listing.Location.Name - @listing.Employer.FirstName @listing.Employer.LastName
-                        </option>
-                    }
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => appointment.ListingId)" />
-        </div>
-    </div>
-
-
 
     <div class="form-group">
-        <label>Date Out: </label>
+        <label>Date of Appointment: </label>
         <div>
             <InputDate @bind-Value="@appointment.DateOut" class="form-control" />
             <ValidationMessage For="@(() => appointment.DateOut)" />
         </div>
     </div>
 
-    @if (appointment.Id > 0)
-    {
-        <div class="form-group">
-            <label>Date In: </label>
+    @*<div class="form-group">
+        <label>Listings: </label>
+
+        <div>
+            <InputSelect @bind-Value="appointment.ListingId" class="form-control">
+                <option value="">--Pick a Job--</option>
+                @if (Listings != null)
+                {
+                    foreach (var listing in Listings)
+                    {
+                        <option value="@listing.Id">
+                            @listing.Name
+                        </option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => appointment.ListingId)" />
+        </div>
+    </div>*@
+
+    @*<div class="form-group">
+        <label>Date of Appointment: </label>
+        <div>
+            <InputDate @bind-Value="@appointment.DateOut" class="form-control" />
+            <ValidationMessage For="@(() => appointment.DateOut)" />
+        </div>
+    </div>*@
+
+    <div class="form-group">
+            <label>Location of Appointment: </label>
             <div>
-                <InputDate @bind-Value="@appointment.DateIn" class="form-control" />
-                <ValidationMessage For="@(() => appointment.DateIn)" />
+                <InputSelect @bind-Value="@appointment.ListingId" class="form-control">
+                    <option value="">--Select Location--</option>
+                    @if (Listings != null)
+                    {
+                        foreach (var lname in Listings)
+                        {
+                            <option value="@lname.Id">
+                               @lname.Location.Name
+                            </option>
+                            }
+                           }
+                        </InputSelect>
+                <ValidationMessage For="@(() => appointment.ListingId)" />
             </div>
         </div>
-    }
+
+    @*@if (appointment.Id > 0)
+        {
+            <div class="form-group">
+                <label>Date In: </label>
+                <div>
+                    <InputDate @bind-Value="@appointment.DateIn" class="form-control" />
+                    <ValidationMessage For="@(() => appointment.DateIn)" />
+                </div>
+            </div>
+        }*@
 
     <br />
-    @if (!Disabled) {  
-    <button type="submit" class="btn btn-success btn-block">
-        Book Appointment
-    </button>
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            Book Appointment
+        </button>
     }
     <BackToList Target="appointments" />
-    
 </EditForm>
 
 @code {

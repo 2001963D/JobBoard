@@ -2,8 +2,10 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
+@inject HttpInterceptorService _interceptor
+@implements IDisposable 
 
-<h3 class="card-title">Job Seekers</h3>
+<h3 class="card-title"><b><u>Job Seekers</u></b></h3>
 
 <a href="/jSs/create" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
@@ -37,10 +39,10 @@ else
                     <td>@jS.Email</td>
                     <td>@jS.Resume</td>
                     <td>
-                        <a href="/makes/view/@jS.Id" class="btn btn-primary">
+                        <a href="/jSs/view/@jS.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/makes/edit/@jS.Id" class="btn btn-warning">
+                        <a href="/jSs/edit/@jS.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(jS.Id))">
@@ -52,7 +54,7 @@ else
         </tbody>
     </table>
 }
-
+<SurveyPrompt Title="Any questions/problems?" />
 
 @code {
     private List<JS> JSs;
@@ -71,5 +73,9 @@ else
             await _client.DeleteAsync($"{Endpoints.JSsEndpoint}/{jSId}");
             await OnInitializedAsync();
         }
+    }
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 }

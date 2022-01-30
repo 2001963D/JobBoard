@@ -338,9 +338,11 @@ namespace JobBoard.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LocationId = table.Column<int>(type: "int", nullable: true),
+                    DateIn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateOut = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateAndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ListingId = table.Column<int>(type: "int", nullable: true),
+                    ListingId = table.Column<int>(type: "int", nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -354,13 +356,13 @@ namespace JobBoard.Server.Migrations
                         column: x => x.ListingId,
                         principalTable: "Listings",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Appointments_Locations_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Locations",
                         principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

@@ -13,11 +13,13 @@ namespace JobBoard.Shared.Domain
         [Required]
         [DataType(DataType.Date)]
         public DateTime DateOut { get; set; }
-        public int? LocationId { get; set; }
-        public virtual Location Location { get; set; }
-        public DateTime DateAndTime {get; set;}
+        public DateTime DateAndTime { get; set; }
+        [Required]
         public int? ListingId { get; set; }
         public virtual Listing Listing { get; set; }
+        [Required]
+        public int? LocationId { get; set; }
+        public virtual Location Location { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

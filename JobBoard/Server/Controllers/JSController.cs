@@ -32,6 +32,7 @@ namespace JobBoard.Server.Controllers
         //public async Task<ActionResult<IEnumerable<JS>>> GetJSs()
         public async Task<IActionResult> GetJSs()
         {
+
             //return await _context.JSs.ToListAsync();
             var JSs = await _unitofWork.JSs.GetAll();
             return Ok(JSs);

@@ -1,49 +1,67 @@
-﻿@page "/search/"
+﻿@page "/searchs/"
 @inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
 
-<EditForm Model="@search" OnValidSubmit="@OnValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    <h><b>Search for Jobs</b></h>
-    <hr />
 
-    <div class="col-12">
-        <div class="col-12 row">
-            <input type="text" class="col-9 form-control" placeholder="search" />
-            <span>&nbsp;</span><button class="btn btn-primary">Search</button>
-        </div>
-        <br />
+<h><b><u>Search for Jobs</u></b></h>
+<hr />
 
-        @if (search.Listings != null && search.Listings.Count() > 0)
-        {
+@if (Listings == null)
+{
+    <div class="alert alert-info">Loading...</div>
+}
+else
+{
+    <table class="table table-responsive" id="listingsTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Navigate</th>
+            </tr>
+        </thead>
+        <tbody>
             @foreach (var listing in Listings)
             {
-                <a href="/appointment"
-                   class="list-group-item-group-item-action flex-column align-items-start bold-text">
-                    @listing.Id <span></span>@listing.Name<span></span>@listing.Location.Name
-                </a>
+                <tr>
+                    <td>@listing.Id</td>
+                    <td>@listing.Name</td>
+                    <td>@listing.Location.Name</td>
+                    <td>
+                        <a href="/listings/view/@listing.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                    </td>
+                </tr>
             }
-        }
-    </div>
-    @if (!Disabled)
+        </tbody>
+    </table>
+}
+
+<SurveyPrompt Title="Any questions/problems?" />
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Search search { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Listing> Listings;
+
+    protected async override Task OnInitializedAsync()
     {
-        <button type="submit" class="btn btn-success btn-block">
-            @ButtonText
-        </button>
+        Listings = await _client.GetFromJsonAsync<List<Listing>>($"{Endpoints.ListingsEndpoint}");
     }
-    <BackToList Target="searchs" />
-</EditForm>
 
-    @code {
-        [Parameter] public bool Disabled { get; set; } = false;
-        [Parameter] public Search search { get; set; }
-        [Parameter] public string ButtonText { get; set; } = "Save";
-        [Parameter] public EventCallback OnValidSubmit { get; set; }
-
-        private IList<Listing> Listings;
-
-        protected async override Task OnInitializedAsync()
-        {
-            Listings = await _client.GetFromJsonAsync<List<Listing>>($"{Endpoints.ListingsEndpoint}");
-        }
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#listingsTable");
     }
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#listingsTable");
+    }
+}

@@ -4,7 +4,7 @@
 @attribute [Authorize]
 @implements IDisposable
 
-    <h3 class="card-title">Appointments</h3>
+    <h3 class="card-title"><b><u>Appointments</u></b></h3>
     <a href="/appointments/create" class="btn btn-secondary">
         <span class="oi oi-plus"></span>
         Book an Appointment
@@ -20,49 +20,53 @@
         <table class="table table-responsive" id="appointmentsTable">
             <thead>
                 <tr>
-                    <th>Job Title</th>
+                    @*<th>Job Title</th>*@
                     <th>Date</th>
                     <th>Location</th>
-                    <th>Employer</th>
-                    <th>Booked on</th>
+                    @*<th>Booked on</th>*@
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var appointment in Appointments)
                 {
-                <tr>
-                    <td>@appointment.ListingId</td>
-                    <td>@appointment.DateOut</td>
-                    <td>@appointment.Listing.Location</td>
-                    <td>@appointment.Listing.Employer.LastName</td>
-                    <td>@appointment.DateCreated.Date.ToString("dd MMMM yyyy")</td>
-                    <td>
-                        <a href="/appointments/view/@appointment.Id" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/appointments/edit/@appointment.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(appointment.Id))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
+                <tr>          
+                    @*<td>@appointment.Listing.Name</td>*@
+                    <td>@appointment.DateOut</td>  
+                    <td>@appointment.Listing.Location.Name</td>
+
+                    @*<td>@appointment.DateCreated</td>*@
+                    @*<td>@appointment.DateCreated.Date.ToString("dd MMMM yyyy")</td>*@
+                    @*Add details of appointment*@
+                <td>
+                    <a href="/appointments/view/@appointment.Id" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/appointments/edit/@appointment.Id" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(appointment.Id))">
+                        <span class="oi oi-delete"></span>
+                        <!-- Create appointment booking item -->
+                    </button>
+                </td>
                 </tr>
                 }
             </tbody>
         </table>
     }
-
+<SurveyPrompt Title="Any questions/problems?" />
 
     @code {
         private List<Appointment> Appointments;
+        private List<Listing> Listings;
 
         private DateTime nullDT = new DateTime(1, 1, 1, 0, 0, 0);
 
         protected async override Task OnInitializedAsync()
         {
             Appointments = await _client.GetFromJsonAsync<List<Appointment>>($"{Endpoints.AppointmentsEndpoint}");
+            Listings = await _client.GetFromJsonAsync<List<Listing>>($"{Endpoints.ListingsEndpoint}");
         }
 
         async Task Delete(int appointmentId)

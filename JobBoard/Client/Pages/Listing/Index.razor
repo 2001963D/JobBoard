@@ -5,7 +5,7 @@
 
 
 
-<h3 class="card-title">Jobs</h3>
+<h3 class="card-title"><b><u>Jobs</u></b></h3>
 <br />
 <a href="/listings/create" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
@@ -40,26 +40,36 @@ else
                     <td>@listing.Employer.FirstName</td>
                     <td>@listing.Location.Name</td>
                     <!--<td>@listing.Review.Description</td>-->
-                    <td>
-                        <a href="/models/view/@listing.Id" class="btn btn-primary">
+                <td>
+                        <a href="/listings/view/@listing.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/models/edit/@listing.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(listing.Id))">
-                            <span class="oi oi-delete"></span>
-                            <!-- Create appointment booking item -->
-                        </button>
-                    </td>
+                    <a href="/listings/edit/@listing.Id" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(listing.Id))">
+                        <span class="oi oi-delete"></span>
+                        <!-- Create appointment booking item -->
+                    </button>
+                </td>
                 </tr>
             }
         </tbody>
     </table>
 }
 
+<SurveyPrompt Title="Any questions/problems?" />
+
 @code {
-    private List<Listing> Listings;
+
+        private int currentCount = 0;
+
+        private void IncrementCount()
+        {
+            currentCount++;
+        }
+    
+private List<Listing> Listings;
 
     protected async override Task OnInitializedAsync()
     {
