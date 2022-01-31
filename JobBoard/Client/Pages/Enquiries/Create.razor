@@ -1,0 +1,19 @@
+﻿@page "/enquirys/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Write An Enquiry</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Enquiry" enquiry="enquiry" OnValidSubmit="@CreateEnquiry" />
+
+@code {
+    Enquiry enquiry = new Enquiry();
+
+    private async Task CreateEnquiry()
+    {
+        await _client.PostAsJsonAsync(Endpoints.EnquirysEndpoint, enquiry);
+        _navManager.NavigateTo("/enquirys/");
+    }
+}

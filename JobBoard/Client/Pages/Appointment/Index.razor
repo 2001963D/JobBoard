@@ -20,7 +20,7 @@
         <table class="table table-responsive" id="appointmentsTable">
             <thead>
                 <tr>
-                    @*<th>Job Title</th>*@
+                    <th>Job Title</th>
                     <th>Date</th>
                     <th>Location</th>
                     @*<th>Booked on</th>*@
@@ -31,7 +31,7 @@
                 @foreach (var appointment in Appointments)
                 {
                 <tr>          
-                    @*<td>@appointment.Listing.Name</td>*@
+                    <td>@appointment.Listing.Name</td>
                     <td>@appointment.DateOut</td>  
                     <td>@appointment.Listing.Location.Name</td>
 

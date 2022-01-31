@@ -4,7 +4,7 @@
 @attribute [Authorize]
 
 <h3 class="card-title">Enquiry</h3>
-<a href="/enquiry/" class="btn btn-secondary">
+<a href="/enquirys/create" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
     Create New Enquiry
 </a>
@@ -24,34 +24,28 @@ else
                 <th>Contact</th>
                 <th>Email Address</th>
                 <th>Details</th>
-                <th>Actions</th>
+                <th>View</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var enquiry in Enquirys)
             {
             <tr>
-                <td>@enquiry.Name</td>
+                <td>@enquiry.FirstName @enquiry.LastName</td>
                 <td>@enquiry.Contact</td>
                 <td>@enquiry.Email</td>
                 <td>@enquiry.Details</td>
                 <td>
-                    <a href="/customers/view/@enquiry.Id" class="btn btn-primary">
+                    <a href="/enquirys/view/@enquiry.Id" class="btn btn-primary">
                         <span class="oi oi-book"></span>
                     </a>
-                    <a href="/customers/edit/@enquiry.Id" class="btn btn-warning">
-                        <span class="oi oi-pencil"></span>
-                    </a>
-                    <button class="btn btn-danger" @onclick="@(()=>Delete(enquiry.Id))">
-                        <span class="oi oi-delete"></span>
-                    </button>
                 </td>
             </tr>
             }
         </tbody>
     </table>
 }
-}
+
 @code {
     private List<Enquiry> Enquirys;
 

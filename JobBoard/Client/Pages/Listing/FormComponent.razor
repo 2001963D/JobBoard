@@ -3,84 +3,84 @@
 <EditForm Model="@listing" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
-
-    <div class="form-group">
-        <label>Title: </label>
-        <div>
-            <InputText @bind-Value="listing.Name" class="form-control" />
-            <ValidationMessage For="@(() => listing.Name)" />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Title: </label>
+            <div>
+                <InputText @bind-Value="listing.Name" class="form-control" />
+                <ValidationMessage For="@(() => listing.Name)" />
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <label>Description: </label>
-        <div>
-            <InputText @bind-Value="listing.Description" class="form-control" />
-            <ValidationMessage For="@(() => listing.Description)" />
+        <div class="form-group">
+            <label>Description: </label>
+            <div>
+                <InputText @bind-Value="listing.Description" class="form-control" />
+                <ValidationMessage For="@(() => listing.Description)" />
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <label>Employer Name: </label>
-        <div>
-            <InputSelect @bind-Value="listing.EmployerId" class="form-control">
-                <option value="">--Select Employer--</option>
-                @if (Employers != null)
-                {
-                    foreach (var ename in Employers)
+        <div class="form-group">
+            <label>Employer Name: </label>
+            <div>
+                <InputSelect @bind-Value="listing.EmployerId" class="form-control">
+                    <option value="">--Select Employer--</option>
+                    @if (Employers != null)
                     {
-                        <option value="@ename.Id">@ename.FirstName</option>
+                        foreach (var ename in Employers)
+                        {
+                            <option value="@ename.Id">@ename.FirstName</option>
+                        }
                     }
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => listing.EmployerId)" />
+                </InputSelect>
+                <ValidationMessage For="@(() => listing.EmployerId)" />
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <label>Location: </label>
-        <div>
-            <InputSelect @bind-Value="listing.LocationId" class="form-control">
-                <option value="">--Select Location--</option>
-                @if (Locations != null)
-                {
-                    foreach (var lname in Locations)
+        <div class="form-group">
+            <label>Location: </label>
+            <div>
+                <InputSelect @bind-Value="listing.LocationId" class="form-control">
+                    <option value="">--Select Location--</option>
+                    @if (Locations != null)
                     {
-                        <option value="@lname.LocationId">@lname.Name</option>
+                        foreach (var lname in Locations)
+                        {
+                            <option value="@lname.LocationId">@lname.Name</option>
+                        }
                     }
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => listing.LocationId)" />
+                </InputSelect>
+                <ValidationMessage For="@(() => listing.LocationId)" />
+            </div>
         </div>
-    </div>
-    <!--
-    <div class="form-group">
-        <label>Review: </label>
-        <div>
-            <InputSelect @bind-Value="listing.ReviewId" class="form-control">
-                <option value="">--Select Review--</option>
-                @if (Reviews != null)
-                {
-                    foreach (var review in Reviews)
+        <!--
+        <div class="form-group">
+            <label>Review: </label>
+            <div>
+                <InputSelect @bind-Value="listing.ReviewId" class="form-control">
+                    <option value="">--Select Review--</option>
+                    @if (Reviews != null)
                     {
-                        <option value="@review.Id">@review.Description</option>
+                        foreach (var review in Reviews)
+                        {
+                            <option value="@review.Id">@review.Description</option>
+                        }
                     }
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => listing.ReviewId)" />
+                </InputSelect>
+                <ValidationMessage For="@(() => listing.ReviewId)" />
+            </div>
         </div>
-    </div>
-        -->
+            -->
 
 
-
-    @if (!Disabled)
-    {
-        <button type="submit" class="btn btn-success btn-block">
-            @ButtonText
-        </button>
-    }
-    <BackToList Target="listings" />
+        </fieldset>
+        @if (!Disabled)
+        {
+            <button type="submit" class="btn btn-success btn-block">
+                @ButtonText
+            </button>
+        }
+        <BackToList Target="listings" />
 </EditForm>
 
 @code {

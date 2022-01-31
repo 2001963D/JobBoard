@@ -17,7 +17,6 @@ namespace JobBoard.Shared.Domain
         [Required]
         public int? ListingId { get; set; }
         public virtual Listing Listing { get; set; }
-        [Required]
         public int? LocationId { get; set; }
         public virtual Location Location { get; set; }
 

@@ -1,0 +1,17 @@
+﻿@page "/enquirys/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View</h3>
+
+<FormComponent enquiry="enquiry" Disabled="true" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Enquiry enquiry = new Enquiry();
+    protected async override Task OnParametersSetAsync()
+    {
+       enquiry = await
+       _client.GetFromJsonAsync<Enquiry>($"{Endpoints.EnquirysEndpoint}/{id}");
+    }
+}
