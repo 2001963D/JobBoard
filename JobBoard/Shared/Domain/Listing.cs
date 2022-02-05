@@ -15,16 +15,14 @@ namespace JobBoard.Shared.Domain
         [Required]
         [StringLength(1000, MinimumLength = 2, ErrorMessage = "Description does not meet length requirements")]
         public string Description { get; set; }
-        public int Rating { get; set; }
+        [Required]
         public int? EmployerId { get; set; }
         public virtual Employer Employer { get; set;}
 
         public virtual List<Appointment> Appointments { get; set; }
-
+        [Required]
         public int? LocationId { get; set; }    
         public virtual Location Location { get; set; }
-        public int? ReviewId { get; set;}
-        public virtual Review Review { get; set; }
 
     }
 }

@@ -33,7 +33,7 @@ namespace JobBoard.Server.Controllers
         public async Task<IActionResult> GetAppointments()
         {
             //return await _context.Appointments.ToListAsync();
-            var Appointments = await _unitofWork.Appointments.GetAll();
+            var Appointments = await _unitofWork.Appointments.GetAll(includes: q => q.Include(x => x.Listing));
             return Ok(Appointments);
         }
 

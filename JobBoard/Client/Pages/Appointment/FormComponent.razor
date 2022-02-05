@@ -9,7 +9,7 @@
             <label>Listings: </label>
 
             <div>
-                <InputSelect @bind-Value="appointment.ListingId" class="form-control">
+                <InputSelect @bind-Value="@appointment.ListingId" class="form-control">
                     <option value="">--Pick a Job--</option>
                     @if (Listings != null)
                     {
@@ -29,8 +29,8 @@
         <div class="form-group">
             <label>Date of Appointment: </label>
             <div>
-                <InputDate @bind-Value="@appointment.DateOut" class="form-control" />
-                <ValidationMessage For="@(() => appointment.DateOut)" />
+                <InputDate @bind-Value="@appointment.DateIn" class="form-control" />
+                <ValidationMessage For="@(() => appointment.DateIn)" />
             </div>
         </div>
 
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        @*@if (appointment.Id > 0)
+        @if (appointment.Id > 0)
             {
                 <div class="form-group">
                     <label>Date In: </label>
@@ -71,7 +71,7 @@
                         <ValidationMessage For="@(() => appointment.DateIn)" />
                     </div>
                 </div>
-            }*@
+            }
 
         <br />
     </fieldset>

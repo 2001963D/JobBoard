@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobBoard.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220131072003_newdb")]
+    [Migration("20220204180929_newdb")]
     partial class newdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -205,9 +205,6 @@ namespace JobBoard.Server.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateAndTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -224,18 +221,12 @@ namespace JobBoard.Server.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int?>("LocationId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ListingId");
-
-                    b.HasIndex("LocationId");
 
                     b.ToTable("Appointments");
                 });
@@ -398,21 +389,17 @@ namespace JobBoard.Server.Migrations
                         .HasColumnType("nvarchar(1000)");
 
                     b.Property<int?>("EmployerId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("LocationId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ReviewId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("SearchId")
                         .HasColumnType("int");
@@ -425,8 +412,6 @@ namespace JobBoard.Server.Migrations
                     b.HasIndex("EmployerId");
 
                     b.HasIndex("LocationId");
-
-                    b.HasIndex("ReviewId");
 
                     b.HasIndex("SearchId");
 
@@ -672,30 +657,22 @@ namespace JobBoard.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JobBoard.Shared.Domain.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Listing");
-
-                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("JobBoard.Shared.Domain.Listing", b =>
                 {
                     b.HasOne("JobBoard.Shared.Domain.Employer", "Employer")
                         .WithMany()
-                        .HasForeignKey("EmployerId");
+                        .HasForeignKey("EmployerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("JobBoard.Shared.Domain.Location", "Location")
                         .WithMany()
-                        .HasForeignKey("LocationId");
-
-                    b.HasOne("JobBoard.Shared.Domain.Review", "Review")
-                        .WithMany()
-                        .HasForeignKey("ReviewId");
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("JobBoard.Shared.Domain.Search", null)
                         .WithMany("Listings")
@@ -704,8 +681,6 @@ namespace JobBoard.Server.Migrations
                     b.Navigation("Employer");
 
                     b.Navigation("Location");
-
-                    b.Navigation("Review");
                 });
 
             modelBuilder.Entity("JobBoard.Shared.Domain.Review", b =>

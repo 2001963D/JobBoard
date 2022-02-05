@@ -300,10 +300,8 @@ namespace JobBoard.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: false),
-                    EmployerId = table.Column<int>(type: "int", nullable: true),
-                    LocationId = table.Column<int>(type: "int", nullable: true),
-                    ReviewId = table.Column<int>(type: "int", nullable: true),
+                    EmployerId = table.Column<int>(type: "int", nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false),
                     SearchId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -318,19 +316,13 @@ namespace JobBoard.Server.Migrations
                         column: x => x.EmployerId,
                         principalTable: "Employers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Listings_Locations_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Locations",
                         principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Listings_Reviews_ReviewId",
-                        column: x => x.ReviewId,
-                        principalTable: "Reviews",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -341,9 +333,7 @@ namespace JobBoard.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DateIn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DateOut = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateAndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ListingId = table.Column<int>(type: "int", nullable: false),
-                    LocationId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -357,12 +347,6 @@ namespace JobBoard.Server.Migrations
                         column: x => x.ListingId,
                         principalTable: "Listings",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Appointments_Locations_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Locations",
-                        principalColumn: "LocationId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -408,11 +392,6 @@ namespace JobBoard.Server.Migrations
                 name: "IX_Appointments_ListingId",
                 table: "Appointments",
                 column: "ListingId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Appointments_LocationId",
-                table: "Appointments",
-                column: "LocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -473,11 +452,6 @@ namespace JobBoard.Server.Migrations
                 name: "IX_Listings_LocationId",
                 table: "Listings",
                 column: "LocationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Listings_ReviewId",
-                table: "Listings",
-                column: "ReviewId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Listings_SearchId",
@@ -557,10 +531,16 @@ namespace JobBoard.Server.Migrations
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
+                name: "Reviews");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Jss");
 
             migrationBuilder.DropTable(
                 name: "Listings");
@@ -569,13 +549,7 @@ namespace JobBoard.Server.Migrations
                 name: "Employers");
 
             migrationBuilder.DropTable(
-                name: "Reviews");
-
-            migrationBuilder.DropTable(
                 name: "Searchs");
-
-            migrationBuilder.DropTable(
-                name: "Jss");
 
             migrationBuilder.DropTable(
                 name: "Locations");

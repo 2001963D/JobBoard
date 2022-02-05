@@ -4,89 +4,89 @@
 @attribute [Authorize]
 @implements IDisposable
 
-    <h3 class="card-title"><b><u>Appointments</u></b></h3>
-    <a href="/appointments/create" class="btn btn-secondary">
-        <span class="oi oi-plus"></span>
-        Book an Appointment
-    </a>
-    <br />
-    <br />
-    @if (Appointments == null)
-    {
-        <div class="alert alert-info">Loading Appointments...</div>
-    }
-    else
-    {
-        <table class="table table-responsive" id="appointmentsTable">
-            <thead>
+<h3 class="card-title"><b><u>Appointments</u></b></h3>
+<a href="/appointments/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Book an Appointment
+</a>
+<br />
+<br />
+@if (Appointments == null)
+{
+    <div class="alert alert-info">Loading Appointments...</div>
+}
+else
+{
+    <table class="table table-responsive" id="appointmentsTable">
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Booked on</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody> 
+            @foreach (var appointment in Appointments)
+            {
                 <tr>
-                    <th>Job Title</th>
-                    <th>Date</th>
-                    <th>Location</th>
-                    @*<th>Booked on</th>*@
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var appointment in Appointments)
-                {
-                <tr>          
                     <td>@appointment.Listing.Name</td>
-                    <td>@appointment.DateOut</td>  
-                    <td>@appointment.Listing.Location.Name</td>
-
-                    @*<td>@appointment.DateCreated</td>*@
+                    <td>@appointment.DateIn</td>
+                    <td>@appointment.Listing.Location</td>
+                    <td>@appointment.DateCreated</td>
                     @*<td>@appointment.DateCreated.Date.ToString("dd MMMM yyyy")</td>*@
                     @*Add details of appointment*@
-                <td>
-                    <a href="/appointments/view/@appointment.Id" class="btn btn-primary">
-                        <span class="oi oi-book"></span>
-                    </a>
-                    <a href="/appointments/edit/@appointment.Id" class="btn btn-warning">
-                        <span class="oi oi-pencil"></span>
-                    </a>
-                    <button class="btn btn-danger" @onclick="@(()=>Delete(appointment.Id))">
-                        <span class="oi oi-delete"></span>
-                        <!-- Create appointment booking item -->
-                    </button>
-                </td>
+                    <td>
+                        <a href="/appointments/view/@appointment.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/appointments/edit/@appointment.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(appointment.Id))">
+                            <span class="oi oi-delete"></span>
+                            <!-- Create appointment booking item -->
+                        </button>
+                    </td>
                 </tr>
-                }
-            </tbody>
-        </table>
-    }
+            }
+        </tbody>
+    </table>
+}
 <SurveyPrompt Title="Any questions/problems?" />
 
-    @code {
-        private List<Appointment> Appointments;
-        private List<Listing> Listings;
+@code {
+    private List<Appointment> Appointments { get; set; }
+    private List<Listing> Listings { get; set; }
 
-        private DateTime nullDT = new DateTime(1, 1, 1, 0, 0, 0);
+    private DateTime nullDT = new DateTime(1, 1, 1, 0, 0, 0);
 
-        protected async override Task OnInitializedAsync()
-        {
-            Appointments = await _client.GetFromJsonAsync<List<Appointment>>($"{Endpoints.AppointmentsEndpoint}");
-            Listings = await _client.GetFromJsonAsync<List<Listing>>($"{Endpoints.ListingsEndpoint}");
-        }
+    protected async override Task OnInitializedAsync()
+    {
+        Appointments = await _client.GetFromJsonAsync<List<Appointment>>($"/{Endpoints.AppointmentsEndpoint}");
+        Listings = await _client.GetFromJsonAsync<List<Listing>>($"{Endpoints.ListingsEndpoint}");
+        Console.WriteLine(Appointments[0].Listing.Name);
+    }
 
-        async Task Delete(int appointmentId)
+    async Task Delete(int appointmentId)
+    {
+        var appointment = Appointments.First(q => q.Id == appointmentId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {appointment.Id}?");
+        if (confirm)
         {
-            var appointment = Appointments.First(q => q.Id == appointmentId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {appointment.Id}?");
-            if (confirm)
-            {
-                await _client.DeleteAsync($"{Endpoints.AppointmentsEndpoint}/{appointmentId}");
-                await OnInitializedAsync();
-            }
-        }
-
-        protected async override Task OnAfterRenderAsync(bool firstRender)
-        {
-            await js.InvokeVoidAsync("AddDataTable", "#appointmentsTable");
-        }
-        public void Dispose()
-        {
-            js.InvokeVoidAsync("DataTablesDispose", "#appointmentsTable");
+            await _client.DeleteAsync($"{Endpoints.AppointmentsEndpoint}/{appointmentId}");
+            await OnInitializedAsync();
         }
     }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#appointmentsTable");
+    }
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#appointmentsTable");
+    }
+}
 
