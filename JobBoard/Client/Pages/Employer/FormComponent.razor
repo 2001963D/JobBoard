@@ -4,35 +4,41 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
     <fieldset disabled="@Disabled">
-    <div class="form-group">
-        <label>Employer First Name: </label>
-        <div>
-            <InputText @bind-Value="employer.FirstName" class="form-control" />
-            <ValidationMessage For="@(() => employer.FirstName)" />
+        <div class="form-group">
+            <label>Employer First Name: </label>
+            <div>
+                <InputText @bind-Value="employer.FirstName" class="form-control" />
+                <ValidationMessage For="@(() => employer.FirstName)" />
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label>Employer Last Name: </label>
-        <div>
-            <InputText @bind-Value="employer.LastName" class="form-control" />
-            <ValidationMessage For="@(() => employer.LastName)" />
+        <div class="form-group">
+            <label>Employer Last Name: </label>
+            <div>
+                <InputText @bind-Value="employer.LastName" class="form-control" />
+                <ValidationMessage For="@(() => employer.LastName)" />
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label>Employer Contact: </label>
-        <div>
-            <InputText @bind-Value="employer.Contact" class="form-control" />
-            <ValidationMessage For="@(() => employer.Contact)" />
+        <div class="form-group">
+            <label>Employer Contact: </label>
+            <div>
+                <InputText @bind-Value="employer.Contact" class="form-control" />
+                <ValidationMessage For="@(() => employer.Contact)" />
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label>Employer Email: </label>
-        <div>
-            <InputText @bind-Value="employer.Email" class="form-control" />
-            <ValidationMessage For="@(() => employer.Email)" />
+        <div class="form-group">
+            <label>Employer Email: </label>
+            <div>
+                <InputText @bind-Value="employer.Email" class="form-control" />
+                <ValidationMessage For="@(() => employer.Email)" />
+            </div>
         </div>
-    </div>
-        </fieldset>
+
+        <div class="form-control-file">
+            <label for="image">Choose Profile Picture:</label>
+            <InputFile OnChange="OnFileChange" />
+        </div>
+
+    </fieldset>
     @if (!Disabled)
     {
         <button type="submit" class="btn btn-success btn-block">
@@ -48,4 +54,14 @@
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 
+    async Task OnFileChange(InputFileChangeEventArgs e)
+    {
+        var format = " image/png";
+        var resizedImage = await e.File.RequestImageFileAsync(format, 300, 300);
+        var buffer = new byte[resizedImage.Size];
+        await resizedImage.OpenReadStream().ReadAsync(buffer);
+        var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+
+
+    }
 }

@@ -1,4 +1,5 @@
-﻿@inject HttpClient _client 
+﻿@inject HttpClient _client
+
 
 
 <EditForm Model="@appointment" OnValidSubmit="@OnValidSubmit">
@@ -16,7 +17,7 @@
                         foreach (var listing in Listings)
                         {
                             <option value="@listing.Id">
-                                @listing.Name
+                                @listing.Name - @listing.Location.Name
                             </option>
                         }
                     }
@@ -34,16 +35,7 @@
             </div>
         </div>
 
-
         @*<div class="form-group">
-                <label>Date of Appointment: </label>
-                <div>
-                    <InputDate @bind-Value="@appointment.DateOut" class="form-control" />
-                    <ValidationMessage For="@(() => appointment.DateOut)" />
-                </div>
-            </div>*@
-
-        <div class="form-group">
             <label>Location of Appointment: </label>
             <div>
                 <InputSelect @bind-Value="@appointment.ListingId" class="form-control">
@@ -60,18 +52,18 @@
                 </InputSelect>
                 <ValidationMessage For="@(() => appointment.ListingId)" />
             </div>
-        </div>
+        </div>*@
 
         @if (appointment.Id > 0)
-            {
-                <div class="form-group">
-                    <label>Date In: </label>
-                    <div>
-                        <InputDate @bind-Value="@appointment.DateIn" class="form-control" />
-                        <ValidationMessage For="@(() => appointment.DateIn)" />
-                    </div>
+        {
+            <div class="form-group">
+                <label>Date In: </label>
+                <div>
+                    <InputDate @bind-Value="@appointment.DateIn" class="form-control" />
+                    <ValidationMessage For="@(() => appointment.DateIn)" />
                 </div>
-            }
+            </div>
+        }
 
         <br />
     </fieldset>

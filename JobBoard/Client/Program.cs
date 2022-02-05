@@ -1,3 +1,4 @@
+using Blazored.Modal;
 using JobBoard.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -35,7 +36,7 @@ namespace JobBoard.Client
 
             builder.Services.AddApiAuthorization();
 
-
+            //builder.Services.AddBlazoredModal();
             await builder.Build().RunAsync();
         }
     }

@@ -31,11 +31,14 @@ else
                     <td>@listing.Name</td>
                     <td>@listing.Location.Name</td>
                     @*navigate to appointments*@
-                    <td>
-                        <a href="/listings/view/@listing.Id" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                    </td>
+                <td>
+                    <a href="/listings/view/@listing.Id" class="btn btn-primary">
+                        <span class="oi oi-eye"></span>
+                    </a>
+                    <a href="/appointments/create/" class="btn btn-secondary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                </td>
                 </tr>
             }
         </tbody>
