@@ -43,7 +43,7 @@ namespace JobBoard.Server.Controllers
         public async Task<IActionResult> GetReview(int id)
         {
             // var Review = await _context.Reviews.FindAsync(id);
-            var Review = await _unitofWork.Reviews.Get(q => q.Id == id);
+            var Review = await _unitofWork.Reviews.GetAll(q => q.ListingId == id);
 
             if (Review == null)
             {
