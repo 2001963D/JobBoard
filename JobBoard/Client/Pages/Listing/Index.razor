@@ -23,6 +23,7 @@
     <table class="table table-responsive">
         <thead>
             <tr>
+                <th>Profile Picture</th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>Wage ($)</th>
@@ -35,6 +36,7 @@
             @foreach (var listing in Listings)
             {
                 <tr>
+                    <td><img src="@listing.Image" width="200" /></td>
                     <td>@listing.Name</td>
                     <td>@listing.Description</td>
                     <td>$@listing.Wage</td>
@@ -64,7 +66,7 @@
 
 @code {
 
-private List<Listing> Listings;
+    private List<Listing> Listings;
 
     protected async override Task OnInitializedAsync()
     {
@@ -82,5 +84,6 @@ private List<Listing> Listings;
             await OnInitializedAsync();
         }
     }
+
 
 }

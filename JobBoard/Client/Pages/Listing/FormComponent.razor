@@ -63,6 +63,11 @@
             </div>
         </div>
 
+        <div class="form-control-file">
+            <label for="image">Choose Profile Picture:</label>
+            <InputFile OnChange="OnFileChange" />
+        </div>
+
     </fieldset>
         @if (!Disabled)
         {
@@ -88,6 +93,17 @@
         Employers = await _client.GetFromJsonAsync<List<Employer>>($"{Endpoints.EmployersEndpoint}");
         Locations = await _client.GetFromJsonAsync<List<Location>>($"{Endpoints.LocationsEndpoint}");
         Reviews = await _client.GetFromJsonAsync<List<Review>>($"{Endpoints.ReviewsEndpoint}");
+    }
+
+    async Task OnFileChange(InputFileChangeEventArgs e)
+    {
+        var format = " image/png";
+        var resizedImage = await e.File.RequestImageFileAsync(format, 300, 300);
+        var buffer = new byte[resizedImage.Size];
+        await resizedImage.OpenReadStream().ReadAsync(buffer);
+        var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+        listing.Image = imageData;
+
     }
 }
 

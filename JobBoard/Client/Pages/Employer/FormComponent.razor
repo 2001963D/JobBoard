@@ -61,7 +61,7 @@
         var buffer = new byte[resizedImage.Size];
         await resizedImage.OpenReadStream().ReadAsync(buffer);
         var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
-
+        employer.Image = imageData;
 
     }
 }

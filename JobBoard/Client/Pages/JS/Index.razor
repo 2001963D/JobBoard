@@ -23,6 +23,7 @@ else
     <table class="table table-responsive">
         <thead>
             <tr>
+                <th>Profile Picture</th>
                 <th>Name</th>
                 <th>Contact</th>
                 <th>Email</th>
@@ -34,6 +35,7 @@ else
             @foreach (var jS in JSs)
             {
                 <tr>
+                    <td><img src="@jS.Image" width="200" /></td>
                     <td>@jS.FirstName @jS.LastName</td>
                     <td>@jS.Contact</td>
                     <td>@jS.Email</td>
@@ -77,5 +79,15 @@ else
     public void Dispose()
     {
         _interceptor.DisposeEvent();
+    }
+    async Task OnFileChange(InputFileChangeEventArgs e)
+    {
+        var format = " image/png";
+        var resizedImage = await e.File.RequestImageFileAsync(format, 300, 300);
+        var buffer = new byte[resizedImage.Size];
+        await resizedImage.OpenReadStream().ReadAsync(buffer);
+        var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+
+
     }
 }

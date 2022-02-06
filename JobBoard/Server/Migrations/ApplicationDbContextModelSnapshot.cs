@@ -258,6 +258,9 @@ namespace JobBoard.Server.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -347,6 +350,9 @@ namespace JobBoard.Server.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -389,6 +395,9 @@ namespace JobBoard.Server.Migrations
                     b.Property<int?>("EmployerId")
                         .IsRequired()
                         .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("LocationId")
                         .IsRequired()
@@ -452,12 +461,17 @@ namespace JobBoard.Server.Migrations
                         new
                         {
                             LocationId = 4,
-                            Name = "SengKang"
+                            Name = "Seng Kang"
                         },
                         new
                         {
                             LocationId = 5,
                             Name = "Paya Lebar"
+                        },
+                        new
+                        {
+                            LocationId = 6,
+                            Name = "Woodlands"
                         });
                 });
 

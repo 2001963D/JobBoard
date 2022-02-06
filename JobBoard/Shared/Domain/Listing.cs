@@ -24,5 +24,6 @@ namespace JobBoard.Shared.Domain
         public int? LocationId { get; set; }    
         public virtual Location Location { get; set; }
         public double Wage { get; set; }
+        public string Image { get; set; }
     }
 }

@@ -77,6 +77,7 @@ namespace JobBoard.Server.Migrations
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Contact = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -119,6 +120,7 @@ namespace JobBoard.Server.Migrations
                     Resume = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -279,6 +281,7 @@ namespace JobBoard.Server.Migrations
                     EmployerId = table.Column<int>(type: "int", nullable: false),
                     LocationId = table.Column<int>(type: "int", nullable: false),
                     Wage = table.Column<double>(type: "float", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SearchId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -392,8 +395,9 @@ namespace JobBoard.Server.Migrations
                     { 1, "Ang Mo Kio" },
                     { 2, "Tampines" },
                     { 3, "Hougang" },
-                    { 4, "SengKang" },
-                    { 5, "Paya Lebar" }
+                    { 4, "Seng Kang" },
+                    { 5, "Paya Lebar" },
+                    { 6, "Woodlands" }
                 });
 
             migrationBuilder.CreateIndex(

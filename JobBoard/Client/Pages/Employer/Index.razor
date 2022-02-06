@@ -21,6 +21,7 @@ else
     <table class="table table-responsive">
         <thead>
             <tr>
+                <th>Profile Picture</th>
                 <th>Name</th>
                 <th>Contact</th>
                 <th>Email</th>
@@ -31,6 +32,7 @@ else
             @foreach (var employer in Employers)
             {
                 <tr>
+                    <td><img src="@employer.Image" width="200"/></td>
                     <td>@employer.FirstName @employer.LastName</td>
                     <td>@employer.Contact</td>
                     <td>@employer.Email</td>

@@ -26,5 +26,6 @@ namespace JobBoard.Shared.Domain
         [Required]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Last Name does not meet length requirements")]
         public string LastName { get; set; }
+        public string Image { get; set; }
     }
 }
