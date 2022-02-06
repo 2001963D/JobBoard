@@ -1,21 +1,26 @@
 ﻿@inject HttpClient _client
 @inject NavigationManager NavigationManager
+@inject NavigationManager _navManager
 
 <EditForm Model="@review" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <fieldset disabled="@Disabled">
+
         <div class="form-group">
             <label>Job Seeker: </label>
             <div>
                 <InputSelect @bind-Value="review.JSId" class="form-control">
-                    <option value="">--Select Review--</option>
+                    <option value="">--Select User--</option>
+
                     @if (JSs != null)
                     {
+
                         foreach (var js in JSs)
                         {
-                        <option value="@js.Id">@js.FirstName @js.LastName </option>}
-                            }
+<option value="@js.Id">@js.FirstName @js.LastName </option>}
+}
+
                 </InputSelect>
                 <ValidationMessage For="@(() => review.JSId)" />
             </div>
@@ -33,24 +38,37 @@
     {
 <button type="submit" class="btn btn-success btn-block">
     @ButtonText
-</button>
-    }
-    <BackToList Target="reviews" />
+</button>}
+
+
+    <a href="/listings/reviews/@listing.Id/"  class="btn btn-outline-dark btn-block" @onclick="NavigateToList">
+        <span class="oi oi-arrow-left"></span>
+        Back To List
+    </a>
 </EditForm>
 
 
-@code { 
+@code {
     [Parameter] public bool Disabled { get; set; } = false;
     [Parameter] public Review review { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public string ListingId { get; set; }
+    [Parameter] public string Target { get; set; }
 
     private IList<Review> Reviews;
     private IList<JS> JSs;
+    private IList<Listing> Listings;
+    Listing listing = new Listing();
 
     protected async override Task OnInitializedAsync()
     {
         Reviews = await _client.GetFromJsonAsync<List<Review>>($"{Endpoints.ReviewsEndpoint}");
         JSs = await _client.GetFromJsonAsync<List<JS>>($"{Endpoints.JSsEndpoint}");
+        Listings = await _client.GetFromJsonAsync<List<Listing>>($"{Endpoints.ListingsEndpoint}");
     }
-    }
+
+    void NavigateToList()
+    {
+        _navManager.NavigateTo($"{_navManager.BaseUri}{Target}");
+    } }

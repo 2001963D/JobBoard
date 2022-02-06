@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobBoard.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220204180929_newdb")]
+    [Migration("20220206075026_newdb")]
     partial class newdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -407,6 +407,9 @@ namespace JobBoard.Server.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Wage")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EmployerId");
@@ -477,9 +480,15 @@ namespace JobBoard.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int?>("JSId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ListingId")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -488,6 +497,8 @@ namespace JobBoard.Server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("JSId");
+
+                    b.HasIndex("ListingId");
 
                     b.ToTable("Reviews");
                 });
@@ -687,9 +698,17 @@ namespace JobBoard.Server.Migrations
                 {
                     b.HasOne("JobBoard.Shared.Domain.JS", "JS")
                         .WithMany()
-                        .HasForeignKey("JSId");
+                        .HasForeignKey("JSId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobBoard.Shared.Domain.Listing", "Listing")
+                        .WithMany()
+                        .HasForeignKey("ListingId");
 
                     b.Navigation("JS");
+
+                    b.Navigation("Listing");
                 });
 
             modelBuilder.Entity("JobBoard.Shared.Domain.Search", b =>

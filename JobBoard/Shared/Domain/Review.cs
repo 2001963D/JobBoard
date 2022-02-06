@@ -12,6 +12,7 @@ namespace JobBoard.Shared.Domain
         [Required]
         [StringLength(1000, MinimumLength = 2, ErrorMessage = "Description does not meet length requirements")]
         public string Description { get; set; }
+        [Required]
         public int? JSId { get; set; }
         public virtual JS JS { get; set; }
         public int? ListingId { get; set; }

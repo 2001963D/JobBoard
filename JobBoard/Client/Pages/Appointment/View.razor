@@ -1,7 +1,7 @@
 ﻿@page "/appointments/view/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
-<h3>View</h3>
+<h3><b><u>View</u></b></h3>
 <FormComponent appointment="appointment" Disabled="true" />
 @code {
     [Parameter] public int id { get; set; }

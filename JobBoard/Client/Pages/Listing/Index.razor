@@ -25,9 +25,9 @@
             <tr>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Wage ($)</th>
                 <th>Employer</th>
                 <th>Location</th>
-                @*Add wages*@
                 <th>Actions</th>
             </tr>
         </thead>
@@ -37,7 +37,8 @@
                 <tr>
                     <td>@listing.Name</td>
                     <td>@listing.Description</td>
-                    <td>@listing.Employer.FirstName</td>
+                    <td>$@listing.Wage</td>
+                    <td>@listing.Employer.FirstName @listing.Employer.LastName</td>
                     <td>@listing.Location.Name</td>
                 <td>
                         <a href="/listings/view/@listing.Id" class="btn btn-primary">

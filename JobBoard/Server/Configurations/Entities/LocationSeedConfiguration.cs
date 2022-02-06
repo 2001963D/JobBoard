@@ -32,13 +32,20 @@ namespace JobBoard.Server.Configurations.Entities
                 new Location
                 {
                     LocationId = 4,
-                    Name = "SengKang"
+                    Name = "Seng Kang"
                 },
                 new Location
                 {
                     LocationId = 5,
                     Name = "Paya Lebar"
+                },
+                new Location
+                { 
+                    LocationId = 6,
+                    Name = "Woodlands"
                 }
+
+                      
                 );
 
         }

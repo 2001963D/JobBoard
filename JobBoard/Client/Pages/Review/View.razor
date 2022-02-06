@@ -1,16 +1,19 @@
-﻿@page "/listings/reviews/view/{id:int}"
+﻿@page "/listings/reviews/ListingId/view/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3>View</h3>
+<h3><b><u>View</u></b></h3>
 
 <FormComponent review="review" Disabled="true" />
-@code { 
+@code {
     [Parameter] public int id { get; set; }
+    [Parameter] public string ListingId { get; set; }
     Review review = new Review();
+    Listing listing = new Listing();
     protected async override Task OnParametersSetAsync()
     {
         review = await
-       _client.GetFromJsonAsync<Review>($"{Endpoints.ReviewsEndpoint}/{id}");
-    } 
+        _client.GetFromJsonAsync<Review>($"{Endpoints.ReviewsEndpoint}/{id}");
     }
+
+}

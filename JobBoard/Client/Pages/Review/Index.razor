@@ -1,4 +1,4 @@
-﻿@page "/listings/reviews/{id:int}"
+﻿@page "/listings/reviews/{ListingId}"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -6,7 +6,7 @@
 
 <h3 class="card-title"><b><u>Reviews</u></b></h3>
 <br />
-<a href="/listings/reviews/create/" class="btn btn-secondary">
+<a href="/listings/reviews/@listing.Id/create/" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
     Write A Review
 </a>
@@ -28,12 +28,18 @@ else
             </tr>
         </thead>
         <tbody>
+                
             @foreach (var review in Reviews)
             {
                 <tr>
-                    <td>@review.JS</td>
+                    @foreach (var jos in JSs)
+                    {
+                        if (jos.Id == review.JSId)
+                        {
+                            <td>@jos.FirstName</td>
+                        }
+                    }
                     <td>@review.Description</td>
-                    <!--<td>@listing.Review.Description</td>-->
                     <td>
                         <a href="/listings/reviews/view/@review.Id" class="btn btn-primary">
                             <span class="oi oi-eye"></span>
@@ -43,33 +49,39 @@ else
                         </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(review.Id))">
                             <span class="oi oi-delete"></span>
-                            <!-- Create appointment booking item -->
                         </button>
                     </td>
                 </tr>
             }
+            
         </tbody>
     </table>
 }
-
+<BackToList Target="listings" />
 <SurveyPrompt Title="Any questions/problems?" />
 
 @code {
 
     private List<Review> Reviews;
+    private List<Listing> Listings;
+    private List<JS> JSs;
+    
     [Parameter] public int id { get; set; }
+    [Parameter] public string ListingId { get; set; }
     Review review = new Review();
+    Listing listing = new Listing();
     protected async override Task OnInitializedAsync()
     {
 
-        Reviews = await _client.GetFromJsonAsync<List<Review>>($"{Endpoints.ReviewsEndpoint}/");
-
+        Reviews = await _client.GetFromJsonAsync<List<Review>>($"{Endpoints.ReviewsEndpoint}");
+        JSs = await _client.GetFromJsonAsync<List<JS>>($"{Endpoints.JSsEndpoint}");
+        Listings = await _client.GetFromJsonAsync<List<Listing>>($"{Endpoints.ListingsEndpoint}");
     }
 
     protected async override Task OnParametersSetAsync()
     {
-        review = await
-       _client.GetFromJsonAsync<Review>($"{Endpoints.ReviewsEndpoint}/{id}");
+        listing = await
+        _client.GetFromJsonAsync<Listing>($"{Endpoints.ListingsEndpoint}/{ListingId}");
     }
 
     async Task Delete(int reviewId)
