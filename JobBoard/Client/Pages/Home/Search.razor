@@ -1,11 +1,16 @@
-﻿@page "/searchs/"
+﻿@page "/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
 @implements IDisposable
 
 
-<h><b><u>Search for Jobs</u></b></h>
+<h1 style="text-align:center;"><b><u>Search for Jobs</u></b></h1>
+<br />
+<p style="text-align:center;" ><a href="">
+    <img src="images/ProjHome.png" alt="img" />
+</a>
+ </p>
 <hr />
 
 @if (Listings == null)

@@ -24,6 +24,7 @@ else
                 <th>Date</th>
                 <th>Location</th>
                 <th>Booked on</th>
+                @*Add which js book*@
                 <th>Actions</th>
             </tr>
         </thead>
@@ -41,8 +42,7 @@ else
                         <td>@listing.Location.Name</td>
                     }
                 }
-                <td>@appointment.DateCreated</td>
-                @*<td>@appointment.DateCreated.Date.ToString("dd MMMM yyyy")</td>*@
+                <td>@appointment.DateCreated.Date.ToString("dd MMMM yyyy")</td>
                 @*Add details of appointment*@
                 <td>
                     <a href="/appointments/view/@appointment.Id" class="btn btn-primary">

@@ -23,6 +23,6 @@ namespace JobBoard.Shared.Domain
         [Required]
         public int? LocationId { get; set; }    
         public virtual Location Location { get; set; }
-
+        public double Wage { get; set; }
     }
 }

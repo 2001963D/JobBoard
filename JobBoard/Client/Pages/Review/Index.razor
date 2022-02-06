@@ -1,0 +1,86 @@
+﻿@page "/listings/reviews/{id:int}"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+
+<h3 class="card-title"><b><u>Reviews</u></b></h3>
+<br />
+<a href="/listings/reviews/create/" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Write A Review
+</a>
+<br />
+<br />
+
+@if (Reviews == null)
+{
+    <div class="alert alert-info">Loading Reviews...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Job Seeker</th>
+                <th>Review</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var review in Reviews)
+            {
+                <tr>
+                    <td>@review.JS</td>
+                    <td>@review.Description</td>
+                    <!--<td>@listing.Review.Description</td>-->
+                    <td>
+                        <a href="/listings/reviews/view/@review.Id" class="btn btn-primary">
+                            <span class="oi oi-eye"></span>
+                        </a>
+                        <a href="/reviews/edit/@review.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(review.Id))">
+                            <span class="oi oi-delete"></span>
+                            <!-- Create appointment booking item -->
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<SurveyPrompt Title="Any questions/problems?" />
+
+@code {
+
+    private List<Review> Reviews;
+    [Parameter] public int id { get; set; }
+    Review review = new Review();
+    protected async override Task OnInitializedAsync()
+    {
+
+        Reviews = await _client.GetFromJsonAsync<List<Review>>($"{Endpoints.ReviewsEndpoint}/");
+
+    }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        review = await
+       _client.GetFromJsonAsync<Review>($"{Endpoints.ReviewsEndpoint}/{id}");
+    }
+
+    async Task Delete(int reviewId)
+    {
+        var review = Reviews.First(q => q.Id == reviewId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {review.Id}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.ReviewsEndpoint}/{reviewId}");
+            await OnInitializedAsync();
+        }
+    }
+
+}

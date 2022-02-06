@@ -18,7 +18,7 @@
 {
     <div class="alert alert-info">Loading Jobs...</div>
 }
-else
+    else
 {
     <table class="table table-responsive">
         <thead>
@@ -27,7 +27,7 @@ else
                 <th>Description</th>
                 <th>Employer</th>
                 <th>Location</th>
-                <!--<th>Reviews</th>-->
+                @*Add wages*@
                 <th>Actions</th>
             </tr>
         </thead>
@@ -39,7 +39,6 @@ else
                     <td>@listing.Description</td>
                     <td>@listing.Employer.FirstName</td>
                     <td>@listing.Location.Name</td>
-                    <!--<td>@listing.Review.Description</td>-->
                 <td>
                         <a href="/listings/view/@listing.Id" class="btn btn-primary">
                             <span class="oi oi-eye"></span>
@@ -49,8 +48,10 @@ else
                     </a>
                     <button class="btn btn-danger" @onclick="@(()=>Delete(listing.Id))">
                         <span class="oi oi-delete"></span>
-                        <!-- Create appointment booking item -->
                     </button>
+                    <a href="/listings/reviews/@listing.Id" class="btn btn-secondary">
+                        <span class="oi oi-book"></span>
+                    </a>
                 </td>
                 </tr>
             }
@@ -62,13 +63,6 @@ else
 
 @code {
 
-        private int currentCount = 0;
-
-        private void IncrementCount()
-        {
-            currentCount++;
-        }
-    
 private List<Listing> Listings;
 
     protected async override Task OnInitializedAsync()

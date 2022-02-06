@@ -53,27 +53,7 @@
                 <ValidationMessage For="@(() => listing.LocationId)" />
             </div>
         </div>
-        <!--
-        <div class="form-group">
-            <label>Review: </label>
-            <div>
-                <InputSelect @bind-Value="listing.ReviewId" class="form-control">
-                    <option value="">--Select Review--</option>
-                    @if (Reviews != null)
-                    {
-                        foreach (var review in Reviews)
-                        {
-                            <option value="@review.Id">@review.Description</option>
-                        }
-                    }
-                </InputSelect>
-                <ValidationMessage For="@(() => listing.ReviewId)" />
-            </div>
-        </div>
-            -->
-
-
-        </fieldset>
+    </fieldset>
         @if (!Disabled)
         {
             <button type="submit" class="btn btn-success btn-block">
