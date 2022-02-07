@@ -36,7 +36,7 @@ namespace JobBoard.Client
 
             builder.Services.AddApiAuthorization();
 
-            //builder.Services.AddBlazoredModal();
+            builder.Services.AddBlazoredModal();
             await builder.Build().RunAsync();
         }
     }

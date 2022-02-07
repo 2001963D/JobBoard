@@ -1,0 +1,23 @@
+﻿@page "/enquirys/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager  
+
+<h3><b><u>Edit Enquiry Profile</u></b></h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditEnquiry" enquiry="enquiry" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Enquiry enquiry = new Enquiry();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        enquiry = await _client.GetFromJsonAsync<Enquiry>($"{Endpoints.EnquirysEndpoint}/{id}");
+    }
+
+    async Task EditEnquiry()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.EnquirysEndpoint}/{id}", enquiry);
+        _navManager.NavigateTo("/enquirys/");
+    }
+}

@@ -39,6 +39,12 @@ else
                     <a href="/enquirys/view/@enquiry.Id" class="btn btn-primary">
                         <span class="oi oi-eye"></span>
                     </a>
+                    <a href="/enquirys/edit/@enquiry.Id" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(enquiry.Id))">
+                        <span class="oi oi-delete"></span>
+                    </button>
                 </td>
             </tr>
             }
@@ -57,7 +63,7 @@ else
     async Task Delete(int enquiryId)
     {
         var enquiry = Enquirys.First(q => q.Id == enquiryId);
-        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {enquiry.Details}?");
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {enquiry.FirstName}?");
         if (confirm)
         {
             await _client.DeleteAsync($"{Endpoints.EnquirysEndpoint}/{enquiryId}");
