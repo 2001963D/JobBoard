@@ -2,23 +2,26 @@
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3>Edit Review</h3>
+<h3><b><u>Edit Review</u></b></h3>
 
-<FormComponent ButtonText="Update" OnValidSubmit="EditReview" ListingId="@ListingId" review="review" />
+<FormComponent ButtonText="Update" OnValidSubmit="@EditReview" ListingId="@ListingId" review="@review" />
 
 @code {
+    Review review = new Review();
+    Listing listing = new Listing();
+    private IList<Review> Reviews;
     [Parameter] public int id { get; set; }
     [Parameter] public string ListingId { get; set; }
-    Review review = new Review();
 
     protected async override Task OnParametersSetAsync()
     {
-        review = await _client.GetFromJsonAsync<Review>($"{Endpoints.ReviewsEndpoint}/{ListingId}");
+        review = await _client.GetFromJsonAsync<Review>($"{Endpoints.ReviewsEndpoint}/{ListingId}/{id}");
     }
 
     async Task EditReview()
     {
-        await _client.PutAsJsonAsync($"{Endpoints.ReviewsEndpoint}/{ListingId}", review);
+        await _client.PutAsJsonAsync($"{Endpoints.ReviewsEndpoint}/{ListingId}/{id}", review);
         _navManager.NavigateTo($"/listings/reviews/{ListingId}");
     }
+
 }

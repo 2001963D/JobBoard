@@ -4,7 +4,7 @@
 
 <h3><b><u>View</u></b></h3>
 
-<FormComponent review="review" Disabled="true" />
+<FormComponent review="review" Disabled="true" ListingId="@ListingId"/>
 @code {
     [Parameter] public int id { get; set; }
     [Parameter] public string ListingId { get; set; }
@@ -13,7 +13,7 @@
     protected async override Task OnParametersSetAsync()
     {
         review = await
-        _client.GetFromJsonAsync<Review>($"{Endpoints.ReviewsEndpoint}/{id}");
+        _client.GetFromJsonAsync<Review>($"{Endpoints.ReviewsEndpoint}/{ListingId}");
     }
 
 }

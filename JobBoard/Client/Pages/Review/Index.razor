@@ -36,16 +36,16 @@ else
                     {
                         if (jos.Id == review.JSId)
                         {
-                            <td>@jos.FirstName</td>
+                            <td>@jos.FirstName @jos.LastName</td>
                         }
                     }
                     <td>@review.Description</td>
                     <td>
                     
-                        <a href="/listings/reviews/@review.ListingId/view/@review.Id" class="btn btn-primary">
+                        <a href="/listings/reviews/@listing.Id/view/@review.Id" class="btn btn-primary">
                             <span class="oi oi-eye"></span>
                         </a>
-                        <a href="/listings/reviews/@review.ListingId/edit/@review.Id" class="btn btn-warning">
+                        <a href="/listings/reviews/@listing.Id/edit/@review.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(review.Id))">
